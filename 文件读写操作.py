@@ -21,3 +21,30 @@ data = file_object.read()
 # 关闭文件
 file_object.close()
 print(data)
+"""
+2 写文件
+    模式:wb(要求写入的文件必须是字节类型)
+"""
+
+# file_object = open('t1.txt', mode='wb')
+
+# file_object.write('高鹏远'.encode('utf-8'))
+
+# file_object.close()
+
+# file_object = open('t2.txt', mode='w+', encoding='utf-8')
+
+# file_object.write('高鹏远')
+
+# file_object.close()
+
+import requests
+
+res = requests.get(
+    url=
+    'https://search.douban.com/movie/subject_search?search_text=%E8%B6%85%E4%BA%BA&cat=1002'
+)
+
+file_object = open('log.html', 'wb')
+file_object.write(res.content)
+file_object.close()
