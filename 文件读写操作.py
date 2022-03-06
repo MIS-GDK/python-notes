@@ -15,6 +15,9 @@
     读取文件，文件不存在时会报错
 """
 # 打开文件
+from pathlib import PosixPath
+from turtle import pos, position
+
 file_object = open('info.txt', mode='rt', encoding='utf-8')
 # 读取文件
 data = file_object.read()
@@ -24,6 +27,8 @@ print(data)
 """
 2 写文件
     模式:wb(要求写入的文件必须是字节类型)
+    写文件不是写到了硬盘，而是写道了缓冲区，系统会将缓冲区的内容刷到硬盘。调用flush()可以立刻刷新
+    在a模式下，调用write写文件时，文件内容永远只能写入文件尾部，不能写道光标位置
 """
 
 # file_object = open('t1.txt', mode='wb')
@@ -38,13 +43,27 @@ print(data)
 
 # file_object.close()
 
-import requests
+# import requests
 
-res = requests.get(
-    url=
-    'https://search.douban.com/movie/subject_search?search_text=%E8%B6%85%E4%BA%BA&cat=1002'
-)
+# res = requests.get(
+#     url=
+#     'https://search.douban.com/movie/subject_search?search_text=%E8%B6%85%E4%BA%BA&cat=1002'
+# )
 
-file_object = open('log.html', 'wb')
-file_object.write(res.content)
-file_object.close()
+# file_object = open('log.html', 'wb')
+# file_object.write(res.content)
+# file_object.close()
+"""
+读大文件
+"""
+with open('info.txt', mode='rb') as f:
+    for line in f:
+        print(line)
+"""
+移动光标位置（字节）
+"""
+with open('info.txt', mode='a+', encoding='utf-8') as f:
+    position = f.tell()
+    print(position)
+    f.seek(3)
+    f.write('测试')

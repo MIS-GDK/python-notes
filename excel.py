@@ -16,3 +16,6 @@ for row in ws.iter_rows(values_only=True):
     print(row)
 '''
 
+for row in ws.values:
+    for value in row:
+        print(value)
