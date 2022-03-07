@@ -42,8 +42,8 @@ all_data1.insert(0, row_title1)
 all_data2.insert(0, row_title2)
 
 # 数据比对
-for i in range(0,len(all_data1)):
-    
+for i in range(0, len(all_data1)):
+    pass
 
 # 写入excel
 wb2 = workbook.Workbook()
