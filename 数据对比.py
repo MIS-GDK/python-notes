@@ -1,4 +1,7 @@
 from openpyxl import workbook, load_workbook
+import operator
+from openpyxl.styles import PatternFill
+
 
 wb = load_workbook(r"C:\Users\Administrator\Desktop\1.xlsx")
 # 1、获取sheet名称
@@ -19,15 +22,23 @@ all_data2 = []
 row_title1 = []
 row_title2 = []
 # 读取标题
-row_title1 = [cell.value for cell in sheet[1]]
-row_title2 = [cell.value for cell in sheet2[1]]
+row_title1 = ["海典-" + cell.value for cell in sheet[1]]
+row_title2 = ["ebs-" + cell.value for cell in sheet2[1]]
 # 读取数据
 for row in sheet.iter_rows(min_row=2):
-    row_data1 = [cell.value for cell in row]
+    row_data1 = [
+        cell.value.strip() if isinstance(cell.value, str) else cell.value
+        for cell in row
+    ]
+    if row_data1[20] == 0:
+        row_data1[20] = None
     all_data1.append(row_data1)
 
 for row in sheet2.iter_rows(min_row=2):
-    row_data2 = [cell.value for cell in row]
+    row_data2 = [
+        cell.value.strip() if isinstance(cell.value, str) else cell.value
+        for cell in row
+    ]
     all_data2.append(row_data2)
 # for row in sheet.rows:
 #     print(row[0].value)
@@ -41,9 +52,12 @@ all_data2.sort(key=lambda data2: data2[1])
 all_data1.insert(0, row_title1)
 all_data2.insert(0, row_title2)
 
-# 数据比对
-for i in range(0, len(all_data1)):
-    pass
+# 数据比对 删除重复项
+# 从后往前删除 避免 list index out of range
+for i in range(len(all_data1) - 1, 0, -1):
+    if operator.eq(all_data1[i][:-1], all_data2[i][:-1]):
+        del all_data1[i]
+        del all_data2[i]
 
 # 写入excel
 wb2 = workbook.Workbook()
@@ -58,4 +72,12 @@ for row in range(1, len(all_data1) + 1):
         else:
             sheet3.cell(row, col).value = all_data1[row - 1][int(col / 2)]
 
-wb2.save(r"C:\Users\Administrator\Desktop\21.xlsx")
+orange_fill = PatternFill(fill_type="solid", fgColor="FFC125")
+
+for i in range(2, len(all_data1) + 1):
+    for j in range(1, sheet3.max_column, 2):
+        if sheet3.cell(i, j).value != sheet3.cell(i, j + 1).value:
+            sheet3.cell(i, j).fill = orange_fill
+            sheet3.cell(i, j + 1).fill = orange_fill
+
+wb2.save(r"C:\Users\Administrator\Desktop\河南新稀特前后端数据差异.xlsx")
