@@ -12,7 +12,7 @@ print(name_list)
 #     print(sheet_object.)
 sheet = wb.worksheets[0]
 sheet2 = wb.worksheets[1]
-# print(sheet.rows)
+print(sheet.max_row)
 row_data1 = []
 all_data1 = []
 
@@ -80,4 +80,4 @@ for i in range(2, len(all_data1) + 1):
             sheet3.cell(i, j).fill = orange_fill
             sheet3.cell(i, j + 1).fill = orange_fill
 
-wb2.save(r"C:\Users\Administrator\Desktop\河南新稀特前后端数据差异.xlsx")
+wb2.save(r"C:\Users\Administrator\Desktop\供应商头层信息前后端数据差异.xlsx")
