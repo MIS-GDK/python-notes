@@ -15,8 +15,6 @@
     读取文件，文件不存在时会报错
 """
 # 打开文件
-from pathlib import PosixPath
-from turtle import pos, position
 
 file_object = open('info.txt', mode='rt', encoding='utf-8')
 # 读取文件
