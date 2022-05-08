@@ -11,9 +11,10 @@ class MyType(type):
     # 参数cls，代表要实例化的类,这里即是类 <class '__main__.MyType'>
     # 因为是元类,实例化的对象即是 FOO 类，这里的data即为对象 FOO类 <class '__main__.Foo'>
     # 此参数在实例化时由Python解释器自动提供
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls, name, bases, attrs):
         print(cls)
-        data = super().__new__(cls, *args, **kwargs)
+        # data = super().__new__(cls, *args, **kwargs)
+        data = super().__new__(cls, name, bases, attrs)
         return data
 
     def __call__(self, *args, **kwargs):
