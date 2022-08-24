@@ -13,6 +13,7 @@ question = Table(
     Column("pub_date", Date, nullable=False),
 )
 
+
 choice = Table(
     "choice",
     meta,
